@@ -100,4 +100,12 @@ class HRNaptar
 
         return $days;
     }
+
+    public function getDays(Month|null $month = null): Collection
+    {
+        if (!$month) {
+            return $this->days;
+        }
+        return $this->days->filter(fn(Day $day) => $day->month === $month);
+    }
 }

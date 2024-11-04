@@ -2,12 +2,18 @@
 
 namespace App\Providers;
 
+use App\Dto\ClockifyTimeEntrySynth;
 use App\Dto\DaySynth;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
 {
+    protected array $synthesizers = [
+        DaySynth::class,
+        ClockifyTimeEntrySynth::class,
+    ];
+
     /**
      * Register any application services.
      */
@@ -21,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Livewire::propertySynthesizer(DaySynth::class);
+        foreach ($this->synthesizers as $synthesizer) {
+            Livewire::propertySynthesizer($synthesizer);
+        }
     }
 }
